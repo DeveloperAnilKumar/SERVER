@@ -170,7 +170,7 @@ exports.getAllProducts = async (req, res) => {
   try {
     let { page, limit } = req.query;
     page = parseInt(page) || 1;
-    limit = parseInt(limit) || 10; 
+    limit = parseInt(limit) || 10;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -207,37 +207,46 @@ exports.getAllProducts = async (req, res) => {
 exports.getCategoryByProduct = async (req, res) => {
   try {
     const categoryId = req.params.category;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    const product = await Product.find({ category: categoryId });
+    const products = await Product.find({ category: categoryId })
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Product.countDocuments({ category: categoryId });
+
     res.status(200).json({
       success: true,
-      message: "all category products",
-      product,
+      message: "Category products fetched successfully",
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
     });
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: "issue with fetch category by id",
+      message: "Issue with fetching category products",
+      error: error.message,
     });
   }
 };
-
 
 exports.searchProduct = async (req, res) => {
   try {
     const { q } = req.query;
-  
+
     const searchResults = await Product.find({
       $or: [
-        { name: { $regex: new RegExp(q, 'i') } }, 
-        { description: { $regex: new RegExp(q, 'i') } } 
-      ]
+        { name: { $regex: new RegExp(q, "i") } },
+        { description: { $regex: new RegExp(q, "i") } },
+      ],
     }).populate("category");
 
     res.json(searchResults);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-

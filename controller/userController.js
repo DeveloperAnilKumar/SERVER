@@ -179,7 +179,7 @@ exports.login = async (req, res) => {
     };
 
     const token = await jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: "2h",
+      expiresIn: "24d",
     });
 
     user.token = token;
@@ -257,30 +257,18 @@ exports.logout = async (req, res) => {
   });
 };
 
-
 exports.getTotalUsers = async (req, res) => {
-
-  try{
+  try {
     const totalUserCount = await User.countDocuments({ role: "USER" });
 
-   res.status(200).json({
+    res.status(200).json({
       success: true,
-      totalUserCount: totalUserCount 
-    })
-
-
-  }catch(error){
- res.status(500).json({
+      totalUserCount: totalUserCount,
+    });
+  } catch (error) {
+    res.status(500).json({
       message: error.message,
       success: false,
     });
-
   }
-
-
-}
-    
-
-    
-    
- 
+};

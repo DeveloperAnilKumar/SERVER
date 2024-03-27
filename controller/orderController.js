@@ -74,7 +74,6 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-
 exports.conformOrder = async (req, res) => {
   try {
     const id = req.params.id;
@@ -87,7 +86,6 @@ exports.conformOrder = async (req, res) => {
       { new: true }
     ).populate("user");
 
-
     const emailTemplate = generateEmailTemplate(order);
 
     const emailSent = await mailSender(
@@ -95,7 +93,6 @@ exports.conformOrder = async (req, res) => {
       "Order Details",
       emailTemplate
     );
-
 
     if (!emailSent) {
       throw new Error("Failed to send email.");
@@ -115,15 +112,26 @@ exports.conformOrder = async (req, res) => {
   }
 };
 
-
 exports.getAllOrders = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+
     const orders = await Order.find({ status: "success" })
-      .sort({ orderDate: -1 }); 
+      .sort({ orderDate: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Order.countDocuments({ status: "success" });
+
     res.status(200).json({
       message: "All orders fetched successfully",
       success: true,
       orders,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
     });
   } catch (error) {
     res.status(500).json({
@@ -132,7 +140,6 @@ exports.getAllOrders = async (req, res) => {
     });
   }
 };
-
 
 exports.getOrderById = async (req, res) => {
   try {
@@ -151,45 +158,35 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
-exports.updateDeliveryStatus = async (req, res)=>{
+exports.updateDeliveryStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-  try{
+    const status = req.body.status;
 
-    const id = req.params.id
+    const update = await Order.findOneAndUpdate(
+      { _id: id },
+      {
+        deliveryStatus: status,
+      },
+      { new: true }
+    );
 
-    const status = req.body.status
-
-      const update = await Order.findOneAndUpdate({_id:id},{
-        deliveryStatus:status
-      } , {new:true})
-
-res.status(200).json({
+    res.status(200).json({
       message: " status updated  successfully",
       success: true,
       update,
     });
-
-  }catch(error){
-  res.status(500).json({
+  } catch (error) {
+    res.status(500).json({
       message: error.message,
       success: false,
     });
   }
-
-  }
-
-
-
-
-
-
-
-
-
-
+};
 
 function generateEmailTemplate(order) {
-  const url = `http://localhost:5173/order/${order._id}`;
+  const url = `https://prajapatishop.netlify.app/order/${order._id}`;
 
   const itemsHtml = order.items
     .map(
@@ -347,5 +344,3 @@ function generateEmailTemplate(order) {
       </html>
     `;
 }
-
-

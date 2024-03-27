@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order Details - Shopping Poring</title>
+    <style>
+        /* Reset CSS */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Responsive styles */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+            }
+        }
+
+        /* General styles */
+        .container {
+            max-width: 58rem;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 150px;
+        }
+
+        .order-details {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .tracking-id {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap; /* Added to allow cards to wrap on smaller screens */
+            justify-content: center; /* Center align cards */
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            width: calc(50% - 10px); /* Adjusted to 50% of container width with gap between cards */
+            max-width: 200px; /* Added max-width for better responsiveness */
+        }
+
+        .product-image img {
+            width: 100%;
+            object-fit: cover; /* Adjusted to cover and maintain aspect ratio */
+            border-top-left-radius: 5px; /* Rounded corners for top of image */
+            border-top-right-radius: 5px;
+        }
+
+        .product-info {
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .product-info h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .cta-button {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px; /* Added margin top */
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://yourlogo.com/logo.png" alt="Shopping Poring Logo">
+        </div>
+        <div class="order-details">
+            <p>Hello,</p>
+            <p>Thank you for your order! Your order details are as follows:</p>
+        </div>
+        <div class="tracking-id">
+            Your order has been shipped with tracking ID: <strong>1234567890</strong>.
+        </div>
+
+        <div class="cards">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://img.freepik.com/free-photo/photo-camera-still-life_23-2150630955.jpg?w=826" alt="Smartphone X">
+                </div>
+                <div class="product-info">
+                    <h2>Product: Smartphone X</h2>
+                    <p>Price: $999.99</p>
+                    <p>Quantity: 1</p>
+                    <p>Total Amount: $999.99</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://img.freepik.com/free-photo/photo-camera-still-life_23-2150630955.jpg?w=826" alt="Smartphone X">
+                </div>
+                <div class="product-info">
+                    <h2>Product: Smartphone X</h2>
+                    <p>Price: $999.99</p>
+                    <p>Quantity: 1</p>
+                    <p>Total Amount: $999.99</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="cta-button">Track Your Order</a>
+        <div class="footer">
+            If you have any questions or concerns about your order, please feel free to contact us.
+            <br>
+            This email was sent by Shopping Poring. Please do not reply to this email.
+        </div>
+    </div>
+</body>
+</html>

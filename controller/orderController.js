@@ -87,7 +87,6 @@ exports.conformOrder = async (req, res) => {
       { new: true }
     ).populate("user");
 
-    console.log(order)
 
     const emailTemplate = generateEmailTemplate(order);
 
@@ -97,7 +96,6 @@ exports.conformOrder = async (req, res) => {
       emailTemplate
     );
 
-    console.log(emailSent);
 
     if (!emailSent) {
       throw new Error("Failed to send email.");

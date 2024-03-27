@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { instance } = require("../config/razorpay");
 const User = require("../model/User");
 const Order = require("../model/Order");
-const mailSender = require("../utils/mailSender");
 const crypto = require("crypto")
 
 exports.capturePayment = async (req, res) => {
@@ -42,7 +41,6 @@ exports.capturePayment = async (req, res) => {
 
     const paymentResponse = await instance.orders.create(option);
 
-    console.log(paymentResponse);
 
     res.status(200).json({
       success: true,

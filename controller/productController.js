@@ -233,6 +233,96 @@ exports.getCategoryByProduct = async (req, res) => {
   }
 };
 
+
+exports.getManProducts = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find({ category: categoryId })
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Product.countDocuments({ category: categoryId });
+
+    res.status(200).json({
+      success: true,
+      message: "Category products fetched successfully",
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Issue with fetching category products",
+      error: error.message,
+    });
+  }
+};
+
+exports.getWomanProducts = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find({ category: categoryId })
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Product.countDocuments({ category: categoryId });
+
+    res.status(200).json({
+      success: true,
+      message: "Category products fetched successfully",
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Issue with fetching category products",
+      error: error.message,
+    });
+  }
+};
+
+
+exports.getKidsProducts = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find({ category: categoryId })
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Product.countDocuments({ category: categoryId });
+
+    res.status(200).json({
+      success: true,
+      message: "Category products fetched successfully",
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Issue with fetching category products",
+      error: error.message,
+    });
+  }
+};
+
+
 exports.searchProduct = async (req, res) => {
   try {
     const { q } = req.query;

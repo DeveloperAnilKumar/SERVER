@@ -6,15 +6,16 @@ const cors = require("cors");
 const app = express()
 
 const {auth, isUser} = require("../middleware/auth");
-const {createOrder, conformOrder, getAllOrders, getOrderById,updateDeliveryStatus} = require("../controller/orderController");
+const {createOrder, conformOrder, getAllOrders, getOrderById,updateDeliveryStatus, getAllReceivedOrders} = require("../controller/orderController");
 
 app.use(cors())
 
 orderRoutes.post("/",auth, isUser, createOrder)
 orderRoutes.put("/:id",auth, isUser,conformOrder )
-orderRoutes.get("/all",getAllOrders )
+orderRoutes.get("/all/:userId",getAllOrders )
 orderRoutes.get("/:id",auth, isUser, getOrderById)
 orderRoutes.put("/updateStatus/:id", updateDeliveryStatus)
+orderRoutes.get("/received/orders",getAllReceivedOrders)
 
 
 

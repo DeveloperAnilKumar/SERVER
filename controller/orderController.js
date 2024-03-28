@@ -118,11 +118,13 @@ exports.getAllOrders = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
 
     const skip = (page - 1) * limit;
+    const userId = req.params.userId;
 
-    const orders = await Order.find({ status: "success" })
+    const orders = await Order.find({ status: "success", user: userId })
       .sort({ orderDate: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .populate("user");
 
     const totalCount = await Order.countDocuments({ status: "success" });
 
@@ -140,6 +142,39 @@ exports.getAllOrders = async (req, res) => {
     });
   }
 };
+
+
+exports.getAllReceivedOrders = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+
+    const orders = await Order.find({ status: "success"})
+      .sort({ orderDate: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("user");
+
+    const totalCount = await Order.countDocuments({ status: "success" });
+
+    res.status(200).json({
+      message: "All orders fetched successfully",
+      success: true,
+      orders,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+
 
 exports.getOrderById = async (req, res) => {
   try {

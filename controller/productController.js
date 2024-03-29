@@ -170,7 +170,7 @@ exports.getAllProducts = async (req, res) => {
   try {
     let { page, limit } = req.query;
     page = parseInt(page) || 1;
-    limit = parseInt(limit) || 10;
+    limit = parseInt(limit) || 25;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -233,7 +233,6 @@ exports.getCategoryByProduct = async (req, res) => {
   }
 };
 
-
 exports.getManProducts = async (req, res) => {
   try {
     const categoryId = req.params.id;
@@ -292,7 +291,6 @@ exports.getWomanProducts = async (req, res) => {
   }
 };
 
-
 exports.getKidsProducts = async (req, res) => {
   try {
     const categoryId = req.params.id;
@@ -321,7 +319,6 @@ exports.getKidsProducts = async (req, res) => {
     });
   }
 };
-
 
 exports.searchProduct = async (req, res) => {
   try {

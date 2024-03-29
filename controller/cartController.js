@@ -68,7 +68,8 @@ exports.deleteCart = async (req, res)=>{
 
 exports.getCartItems = async (req, res)=>{
     try {
-        const  updatedCartItem = await Cart.find({}).populate("product")
+        const id = req.params.id
+        const  updatedCartItem = await Cart.find({user:id}).populate("product")
         res.status(201).json({
             message: "all item fetch successfully",
             success: true,

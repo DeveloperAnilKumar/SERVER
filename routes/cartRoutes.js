@@ -13,7 +13,7 @@ app.use(cors())
 cartRoutes.post("/",auth,isUser, addToCart)
 cartRoutes.delete("/",auth,isUser, deleteCart)
 cartRoutes.put("/",auth,isUser, updateCart)
-cartRoutes.get("/", getCartItems)
+cartRoutes.get("/:id", getCartItems)
 cartRoutes.post("/remove",auth, isUser, removeAllCartItems)
 
 

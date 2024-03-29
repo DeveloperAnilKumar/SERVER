@@ -13,7 +13,7 @@ app.use(cors())
 orderRoutes.post("/",auth, isUser, createOrder)
 orderRoutes.put("/:id",auth, isUser,conformOrder )
 orderRoutes.get("/all/:userId",getAllOrders )
-orderRoutes.get("/:id",auth, isUser, getOrderById)
+orderRoutes.get("/:id" , getOrderById)
 orderRoutes.put("/updateStatus/:id", updateDeliveryStatus)
 orderRoutes.get("/received/orders",getAllReceivedOrders)
 
